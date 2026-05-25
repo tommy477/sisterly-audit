@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SISTERLY — Marketing Audit</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #FFFFFF;
+    --surface: #F4F6F4;
+    --surface2: #EAEEEA;
+    --ink: #111311;
+    --ink-muted: #444844;
+    --ink-light: #727872;
+    --sage: #5C7A5E;
+    --sage-mid: #8AAD8C;
+    --sage-pale: #E0EBE0;
+    --amber: #A0620E;
+    --amber-pale: #FDF0DC;
+    --red: #9B2E2E;
+    --red-pale: #FCEAEA;
+    --green: #1E6640;
+    --green-pale: #E0F0E8;
+    --border: #D8DED8;
+    --border-dark: #B8C4B8;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* COVER */
+  .cover {
+    background: #111311;
+    color: #FFFFFF;
+    padding: 72px 64px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    border: 1px solid rgba(140,173,140,0.18);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -50px; left: 240px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 1px solid rgba(140,173,140,0.12);
+  }
+  .cover-tag {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sage-mid);
+    margin-bottom: 18px;
+  }
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 400;
+    line-height: 1.05;
+    color: #FFFFFF;
+    margin-bottom: 6px;
+  }
+  .cover-title em { font-style: italic; color: var(--sage-mid); }
+  .cover-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 44px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 48px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(140,173,140,0.2);
+  }
+  .cover-meta-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage-mid); margin-bottom: 4px; }
+  .cover-meta-value { font-size: 13px; color: rgba(255,255,255,0.85); }
+
+  /* LAYOUT */
+  .page { max-width: 920px; margin: 0 auto; padding: 0 48px 80px; }
+
+  /* SECTION */
+  .section { margin-top: 60px; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--sage);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--ink);
+  }
+  .section-badge {
+    margin-left: auto;
+    font-size: 10px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .badge-warn { background: var(--amber-pale); color: var(--amber); }
+  .badge-danger { background: var(--red-pale); color: var(--red); }
+  .badge-ok { background: var(--green-pale); color: var(--green); }
+  .badge-mixed { background: var(--sage-pale); color: var(--sage); }
+
+  /* METRIC GRID */
+  .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(138px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .metric-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 6px; }
+  .metric-value { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 400; line-height: 1; color: var(--ink); margin-bottom: 4px; }
+  .metric-sub { font-size: 11px; color: var(--ink-muted); }
+  .c-up { color: var(--green); }
+  .c-down { color: var(--red); }
+  .c-warn { color: var(--amber); }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+
+  /* GEO CARD */
+  .geo-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px 22px; }
+  .geo-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .geo-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; }
+  .geo-key { color: var(--ink-muted); }
+  .geo-val { font-weight: 500; color: var(--ink); }
+
+  /* TABLE */
+  .table-wrap { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 24px; }
+  .table-title { padding: 12px 18px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); border-bottom: 1px solid var(--border); background: var(--surface); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { padding: 10px 18px; text-align: left; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-light); background: var(--surface); border-bottom: 1px solid var(--border); }
+  td { padding: 11px 18px; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface); }
+
+  /* PILL */
+  .pill { display: inline-block; font-size: 10px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+  .pill-good { background: var(--green-pale); color: var(--green); }
+  .pill-warn { background: var(--amber-pale); color: var(--amber); }
+  .pill-bad { background: var(--red-pale); color: var(--red); }
+  .pill-neutral { background: var(--sage-pale); color: var(--sage); }
+
+  /* FINDINGS */
+  .findings { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .finding {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border-dark);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .finding-bad { border-left-color: var(--red); background: #FEFAFA; }
+  .finding-warn { border-left-color: var(--amber); background: #FEFCF8; }
+  .finding-good { border-left-color: var(--green); background: #FAFCFB; }
+  .finding strong { color: var(--ink); font-weight: 500; }
+
+  /* VERDICT */
+  .verdict-box {
+    background: #111311;
+    color: #FFFFFF;
+    border-radius: 10px;
+    padding: 32px 36px;
+    margin-bottom: 24px;
+  }
+  .verdict-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: #FFFFFF;
+    margin-bottom: 14px;
+  }
+  .verdict-title em { font-style: italic; color: var(--sage-mid); }
+  .verdict-body { font-size: 13px; line-height: 1.85; color: rgba(255,255,255,0.78); }
+  .verdict-body p { margin-bottom: 14px; }
+  .verdict-body p:last-child { margin-bottom: 0; }
+
+  /* SCORECARD */
+  .scorecard { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; }
+  .score-card { border: 1px solid var(--border); border-radius: 8px; padding: 20px; background: var(--surface); text-align: center; }
+  .score-channel { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 10px; }
+  .score-grade { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 400; line-height: 1; margin-bottom: 8px; }
+  .grade-f { color: var(--red); }
+  .grade-d { color: var(--amber); }
+  .grade-c { color: #7A7A10; }
+  .grade-b { color: var(--green); }
+  .score-verdict { font-size: 11px; color: var(--ink-muted); line-height: 1.5; }
+
+  /* REC GRID */
+  .rec-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+  .rec-card { border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; background: var(--surface); }
+  .rec-channel { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 8px; }
+  .rec-action { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 10px; }
+  .rec-detail { font-size: 12px; color: var(--ink-muted); line-height: 1.65; }
+  .rec-saving { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--green); font-weight: 500; }
+
+  /* FEE TABLE */
+  .fee-table { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 24px; }
+  .fee-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1.6fr; padding: 13px 18px; font-size: 13px; border-bottom: 1px solid var(--border); align-items: center; }
+  .fee-row:last-child { border-bottom: none; }
+  .fee-header { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); background: var(--surface); font-weight: 500; }
+  .fee-channel { font-weight: 500; color: var(--ink); }
+  .fee-current { color: var(--ink-muted); }
+  .fee-rec { color: var(--green); font-weight: 500; font-size: 12px; }
+
+  /* CAC */
+  .cac-highlight { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .cac-card { border: 1px solid var(--border); border-radius: 8px; padding: 24px; background: var(--surface); }
+  .cac-card.accent { background: var(--sage-pale); border-color: var(--sage-mid); }
+  .cac-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 8px; }
+  .cac-num { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 400; line-height: 1; color: var(--ink); margin-bottom: 8px; }
+  .cac-sub { font-size: 12px; color: var(--ink-muted); line-height: 1.55; }
+
+  /* FOOTER */
+  .footer { max-width: 920px; margin: 0 auto; padding: 20px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-light); }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-tag">Confidential — Marketing Audit</div>
+  <div class="cover-title">SISTERLY<br><em>Lab</em></div>
+  <div class="cover-sub">Agency Performance Review &amp; Fee Assessment · January – April 2026</div>
+  <div class="cover-meta">
+    <div><div class="cover-meta-label">Period</div><div class="cover-meta-value">Jan 1 – Apr 30, 2026</div></div>
+    <div><div class="cover-meta-label">Monthly Agency Fee</div><div class="cover-meta-value">€12,600 (Meta €2,300 · Google €2,300 · Email €4,600 · Content €3,400)</div></div>
+    <div><div class="cover-meta-label">Total Ad Spend</div><div class="cover-meta-value">€118,985</div></div>
+    <div><div class="cover-meta-label">Channels Audited</div><div class="cover-meta-value">Meta · Google · Email</div></div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- 01 EXECUTIVE SUMMARY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Executive Summary</h2>
+    </div>
+
+    <div class="verdict-box">
+      <div class="verdict-title">The <em>verdict</em></div>
+      <div class="verdict-body">
+        <p>Sisterly is a fundamentally strong brand with a premium product, genuine LTV, and a loyal subscription base. The business is healthy underneath. The paid acquisition layer is not.</p>
+        <p>Across Meta and Google, Sisterly spent €118,985 in four months. On Google, 70% of attributed revenue came from branded search — people already looking for Sisterly by name. Strip that out and the incremental return on ad spend is deeply negative across both platforms. Meta is running at 1.63x blended ROAS and €20k is burning in Google Demand Gen at 0.45x ROAS.</p>
+        <p>The agency deserves credit for the email automation infrastructure and shows genuine capability in the IE Meta campaigns. But the overall fee of €12,600/month is not justified by the results. Revenue grew just 0.3% YoY against significantly higher spend.</p>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- 02 TRAFFIC & REVENUE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Traffic &amp; Revenue Overview</h2>
+      <span class="section-badge badge-warn">Mixed</span>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Sessions YTD</div>
+        <div class="metric-value c-up">85,767</div>
+        <div class="metric-sub">↑ 37% YoY</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Unique Visitors</div>
+        <div class="metric-value c-up">63,138</div>
+        <div class="metric-sub">↑ 44% YoY</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Gross Revenue</div>
+        <div class="metric-value">€844,927</div>
+        <div class="metric-sub">↑ 0.3% YoY</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Total Orders</div>
+        <div class="metric-value">7,628</div>
+        <div class="metric-sub">↑ 0.8% YoY</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Avg Order Value</div>
+        <div class="metric-value">€103.24</div>
+        <div class="metric-sub">Flat YoY (−0.3%)</div>
+      </div>
+    </div>
+
+    <div class="findings">
+      <div class="finding finding-bad"><strong>The core problem in one sentence:</strong> Traffic is up 37%, ad spend is significantly higher YoY, and revenue grew just 0.3%. Sisterly is spending substantially more to stand almost completely still.</div>
+      <div class="finding finding-good"><strong>Retention is genuinely strong.</strong> 75% of orders (5,730) come from returning customers. The subscription model is working and the core business is healthy. This is Sisterly's most important asset.</div>
+    </div>
+  </div>
+
+  <!-- 03 CAC & LTV -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">CAC &amp; LTV Analysis</h2>
+      <span class="section-badge badge-mixed">Manageable</span>
+    </div>
+
+    <div class="cac-highlight">
+      <div class="cac-card">
+        <div class="cac-label">Ad-spend CAC</div>
+        <div class="cac-num">€63</div>
+        <div class="cac-sub">€118,985 ad spend ÷ 1,898 new customers (Jan–Apr cohort data)</div>
+      </div>
+      <div class="cac-card accent">
+        <div class="cac-label">Fully Loaded CAC (incl. agency fee)</div>
+        <div class="cac-num">€89</div>
+        <div class="cac-sub">€169,385 total marketing cost ÷ 1,898 new customers</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-title">LTV Payback — All Cohort Average</div>
+      <table>
+        <thead>
+          <tr><th>Month</th><th>Cumulative LTV</th><th>vs Ad CAC (€63)</th><th>vs Full CAC (€89)</th><th>LTV:CAC</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Month 0 — first purchase</td><td>€130</td><td><span class="pill pill-good">Covered</span></td><td><span class="pill pill-good">Covered</span></td><td>2.1x</td></tr>
+          <tr><td>Month 3</td><td>€201</td><td><span class="pill pill-good">Covered</span></td><td><span class="pill pill-good">Covered</span></td><td>3.2x</td></tr>
+          <tr><td>Month 6</td><td>€233</td><td><span class="pill pill-good">Covered</span></td><td><span class="pill pill-good">Covered</span></td><td>3.7x</td></tr>
+          <tr><td>Month 10</td><td>€251</td><td><span class="pill pill-good">Covered</span></td><td><span class="pill pill-good">Covered</span></td><td>4.0x</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="findings">
+      <div class="finding finding-warn"><strong>AOV of €103 changes the margin picture.</strong> At 40–50% gross margin, first-purchase gross profit (€41–52) does not cover the ad-only CAC of €63. Sisterly is loss-making on new customer acquisition at first order unless margin exceeds ~60%. Recovery depends on subscription retention — which is working, but creates cash flow dependency on LTV payback.</div>
+      <div class="finding finding-good"><strong>LTV trajectory is strong for retained subscribers.</strong> Customers who stay reach €200+ cumulative spend by month 3 and €250+ by month 10. CAC pays back within 2–3 months at any margin above 40%.</div>
+      <div class="finding finding-warn"><strong>Recent cohort quality is declining.</strong> Feb–Apr 2026 cohorts show average M0 spend of €125–150, versus €310–337 for May–Jul 2025 cohorts. Newer customers are spending significantly less from the outset — suggesting lower AOV entry products, heavier discounting, or lower-intent traffic from broad paid targeting.</div>
+    </div>
+  </div>
+
+  <!-- 04 META -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Meta Ads</h2>
+      <span class="section-badge badge-danger">Underperforming</span>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Total Spend</div>
+        <div class="metric-value">€77,251</div>
+        <div class="metric-sub">Jan–Apr 2026</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Blended ROAS</div>
+        <div class="metric-value c-down">1.63x</div>
+        <div class="metric-sub">Target should be 2.5x+</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Purchases</div>
+        <div class="metric-value">1,006</div>
+        <div class="metric-sub">Tracked conversions</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Blended CPA</div>
+        <div class="metric-value c-warn">€76.79</div>
+        <div class="metric-sub">IE €69 · UK €109</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Active Campaigns</div>
+        <div class="metric-value c-down">5</div>
+        <div class="metric-sub">of 114 total in account</div>
+      </div>
+
+    </div>
+
+    <div class="two-col">
+      <div class="geo-card">
+        <div class="geo-title">🇮🇪 Ireland</div>
+        <div class="geo-row"><span class="geo-key">Spend</span><span class="geo-val">€56,712</span></div>
+        <div class="geo-row"><span class="geo-key">Purchases</span><span class="geo-val">818</span></div>
+        <div class="geo-row"><span class="geo-key">CPA</span><span class="geo-val c-up">€69</span></div>
+        <div class="geo-row"><span class="geo-key">Share of spend</span><span class="geo-val">73%</span></div>
+        <div class="geo-row"><span class="geo-key">Verdict</span><span class="geo-val"><span class="pill pill-warn">Acceptable</span></span></div>
+      </div>
+      <div class="geo-card">
+        <div class="geo-title">🇬🇧 United Kingdom</div>
+        <div class="geo-row"><span class="geo-key">Spend</span><span class="geo-val">€20,539</span></div>
+        <div class="geo-row"><span class="geo-key">Purchases</span><span class="geo-val">188</span></div>
+        <div class="geo-row"><span class="geo-key">CPA</span><span class="geo-val c-down">€109</span></div>
+        <div class="geo-row"><span class="geo-key">Share of spend</span><span class="geo-val">27%</span></div>
+        <div class="geo-row"><span class="geo-key">Verdict</span><span class="geo-val"><span class="pill pill-bad">Restructure</span></span></div>
+      </div>
+    </div>
+
+
+    <div class="findings">
+      <div class="finding finding-bad"><strong>1.63x blended ROAS is the headline problem.</strong> On a direct response basis, Meta is not profitable at first order at standard margin levels. The account relies entirely on LTV payback — which works if subscribers retain, but creates significant cash flow risk.</div>
+      <div class="finding finding-bad"><strong>UK is not working.</strong> €20.5k spent at €109 CPA and sub-1x ROAS on almost every UK-specific creative. The Liz Earle campaign (3.49x, €34 CPA) is the single exception — a signal the agency has not scaled. UK spend should be paused or restructured around UK-specific influencer creative only.</div>
+    </div>
+  </div>
+
+  <!-- 05 GOOGLE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Google Ads</h2>
+      <span class="section-badge badge-danger">Significant Waste</span>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Total Spend</div>
+        <div class="metric-value">€41,734</div>
+        <div class="metric-sub">Jan–Apr 2026</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Blended ROAS</div>
+        <div class="metric-value c-warn">2.51x</div>
+        <div class="metric-sub">Misleading — see below</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Conv. Value</div>
+        <div class="metric-value">€104,958</div>
+        <div class="metric-sub">Total attributed</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Brand Search Share</div>
+        <div class="metric-value c-down">70%</div>
+        <div class="metric-sub">€72k of €103k from brand</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Demand Gen Spend</div>
+        <div class="metric-value c-down">€20,264</div>
+        <div class="metric-sub">0.45x ROAS</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">IRE Shopping ROAS</div>
+        <div class="metric-value c-up">7.73x</div>
+        <div class="metric-sub">€17 CPA — best in account</div>
+      </div>
+    </div>
+
+
+    <div class="findings">
+      <div class="finding finding-bad"><strong>The 2.51x blended ROAS is almost entirely brand search.</strong> 70% of Google's attributed revenue (€72k of €103k) came from branded search — people already looking for Sisterly. This is captured intent, not generated demand. Strip brand out and the non-brand Google account is deeply loss-making.</div>
+      <div class="finding finding-bad"><strong>Demand Gen is the single biggest waste in the audit.</strong> Nearly 50% of the Google budget (€20,264) is going to Demand Gen campaigns running at 0.45x ROAS. €17,273 in prospecting Demand Gen returned just €9,545 in conversion value. These are awareness-format placements being run on a direct response budget. They should be cut immediately.</div>
+      <div class="finding finding-bad"><strong>Generic non-brand search is broken.</strong> The IRE generic search spent €4,661 at a €171 CPA. The UK women's search spent €1,889 at €315 CPA and 0.35x ROAS. Both need fundamental restructuring — keywords, match types, landing page alignment, or all three.</div>
+      <div class="finding finding-good"><strong>IRE Shopping is the hidden gem.</strong> Sisterlyed IRE shopping campaign achieved 7.73x ROAS at a €17 CPA — the best in the entire Google account — yet received just €1,418 in spend. Scaling this should be an immediate priority.</div>
+      <div class="finding finding-warn"><strong>UK search is stalled.</strong> The UK search campaign isn't spending due to budget restrictions, with target ROAS set at 3x. Given UK's poor performance across the board, the constraint may be protecting the client — but it also means UK Google has no active strategy.</div>
+    </div>
+  </div>
+
+  <!-- 06 EMAIL -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Email — Klaviyo</h2>
+      <span class="section-badge badge-mixed">Mixed</span>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Attributed Revenue</div>
+        <div class="metric-value">€50,817</div>
+        <div class="metric-sub">Jan–Apr 2026</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">vs Prior Period</div>
+        <div class="metric-value c-down">-23%</div>
+        <div class="metric-sub">Despite +37% traffic</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Campaigns</div>
+        <div class="metric-value">€29,643</div>
+        <div class="metric-sub">58% of email revenue</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Flows</div>
+        <div class="metric-value">€21,174</div>
+        <div class="metric-sub">42% of email revenue</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-title">Flow Performance (lifetime revenue)</div>
+      <table>
+        <thead><tr><th>Flow</th><th>Revenue</th><th>Rev / Recipient</th><th>Assessment</th></tr></thead>
+        <tbody>
+          <tr><td>Billing Reminder (Prospa)</td><td>€274,713</td><td class="c-up">€31.23</td><td><span class="pill pill-good">Core engine</span></td></tr>
+          <tr><td>Failed Billing Attempt</td><td>€13,503</td><td class="c-up">€26.32</td><td><span class="pill pill-good">High value</span></td></tr>
+          <tr><td>Subscription Reactivated</td><td>€1,310</td><td class="c-up">€22.20</td><td><span class="pill pill-good">High value</span></td></tr>
+          <tr><td>Checkout Started (abandoned)</td><td>€4,413</td><td class="c-up">€6.95</td><td><span class="pill pill-good">Solid</span></td></tr>
+          <tr><td>Update Next Order Date</td><td>€8,554</td><td>€5.48</td><td><span class="pill pill-neutral">Solid</span></td></tr>
+          <tr><td>Welcome Flow</td><td>€19,675</td><td class="c-warn">€1.76</td><td><span class="pill pill-warn">Underperforming</span></td></tr>
+          <tr><td>Subscription Cancelled Winback</td><td>€871</td><td class="c-down">€0.76</td><td><span class="pill pill-bad">Weak</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="findings">
+      <div class="finding finding-bad"><strong>-23% email revenue against +37% traffic is the most important contradiction in the audit.</strong> More people arriving, more joining the list — yet Klaviyo generates less revenue. Either new subscribers from paid are lower quality, campaign strategy has weakened, or segmentation is poor. Likely all three.</div>
+      <div class="finding finding-good"><strong>The automation stack is genuinely valuable.</strong> Billing reminders, failed payment recovery, and reactivation flows are all live and performing well. This infrastructure has compounding value and is the strongest argument in the agency's favour.</div>
+      <div class="finding finding-bad"><strong>Welcome flow is critically underperforming.</strong> At €1.76 revenue per recipient, the most important automation for converting new subscribers is failing. Industry benchmark for subscription brands is €8–15 RPR. This needs a full rebuild focused on ingredient education, social proof, and subscription value communication.</div>
+      <div class="finding finding-warn"><strong>Cancellation winback at €0.76/recipient is a missed opportunity.</strong> Given LTV reaches €250+ at month 10, winning back a churned subscriber is enormously valuable. A properly built winback flow should be a priority rebuild.</div>
+    </div>
+  </div>
+
+  <!-- 07 FEE ASSESSMENT -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2 class="section-title">Fee Assessment &amp; Recommendation</h2>
+      <span class="section-badge badge-warn">Renegotiate</span>
+    </div>
+
+    <div class="fee-table">
+      <div class="fee-row fee-header" style="grid-template-columns: 2fr 1fr 1fr;">
+        <span>Channel / Service</span>
+        <span>Monthly Fee</span>
+        <span>Performance</span>
+      </div>
+      <div class="fee-row" style="grid-template-columns: 2fr 1fr 1fr;">
+        <span class="fee-channel">Meta Ads</span>
+        <span class="fee-current">€2,300/mo</span>
+        <span><span class="pill pill-warn">Underperforming</span></span>
+      </div>
+      <div class="fee-row" style="grid-template-columns: 2fr 1fr 1fr;">
+        <span class="fee-channel">Google Ads</span>
+        <span class="fee-current">€2,300/mo</span>
+        <span><span class="pill pill-bad">Significant waste</span></span>
+      </div>
+      <div class="fee-row" style="grid-template-columns: 2fr 1fr 1fr;">
+        <span class="fee-channel">Email / Klaviyo</span>
+        <span class="fee-current">€4,600/mo</span>
+        <span><span class="pill pill-warn">Mixed</span></span>
+      </div>
+      <div class="fee-row" style="grid-template-columns: 2fr 1fr 1fr;">
+        <span class="fee-channel">Content &amp; Creative</span>
+        <span class="fee-current">€3,400/mo</span>
+        <span><span class="pill pill-bad">Misaligned</span></span>
+      </div>
+    </div>
+
+    <div class="verdict-box">
+      <div class="verdict-title">The <em>bottom line</em></div>
+      <div class="verdict-body">
+        <p>The €12,600/month fee is not justified by the results. Sisterly is paying full price for Meta, Google, email, and creative management — and getting flat revenue, a 1.63x Meta ROAS, and a Google account where Demand Gen is actively destroying value at 0.45x ROAS.</p>
+        <p>The agency deserves credit for the email automation infrastructure and shows genuine capability on IE Meta. But the structural problems — UK spend without a working strategy, Demand Gen at sub-0.5x ROAS, and a -23% email revenue decline against +37% traffic — are not the results of a team actively optimising the account.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MAY 2026 UPDATE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2 class="section-title">May 2026 — In-Month Performance</h2>
+      <span class="section-badge badge-mixed">1–21 May</span>
+    </div>
+
+    <div class="findings">
+      <div class="finding" style="background:#F8FAF8; border-left: 3px solid var(--sage); font-size:13px; color:var(--ink-muted);">Data covers 21 days (May 1–21). Figures are not prorated — comparisons to the Jan–Apr monthly averages should account for the partial period.</div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Meta spend</div>
+        <div class="metric-value">€8,654</div>
+        <div class="metric-sub">21 days</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Meta ROAS</div>
+        <div class="metric-value c-down">1.57x</div>
+        <div class="metric-sub">vs 1.63x Jan–Apr avg</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Google spend</div>
+        <div class="metric-value">€3,065</div>
+        <div class="metric-sub">21 days</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Google ROAS</div>
+        <div class="metric-value c-warn">4.47x</div>
+        <div class="metric-sub">Brand search driving</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Klaviyo revenue</div>
+        <div class="metric-value c-up">€12,214</div>
+        <div class="metric-sub">↑ 20.5% vs prior period</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Email flows share</div>
+        <div class="metric-value">58%</div>
+        <div class="metric-sub">€7,120 from automations</div>
+      </div>
+    </div>
+
+    <p class="section-num" style="font-style:normal; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-light); margin-bottom:10px;">Meta — campaign breakdown</p>
+    <div class="table-wrap" style="margin-bottom:24px;">
+      <table>
+        <thead><tr><th style="width:40%">Campaign</th><th>Spend</th><th>ROAS</th><th>Purchases</th><th>CPA</th></tr></thead>
+        <tbody>
+          <tr><td>MOF | IE | Engagement | July 2025</td><td>€627</td><td class="c-up" style="font-weight:500">3.41x</td><td>17</td><td class="c-up">€37</td></tr>
+          <tr><td>TOF | IE | Evergreen | Feb | Codes</td><td>€730</td><td class="c-warn" style="font-weight:500">1.84x</td><td>12</td><td class="c-warn">€61</td></tr>
+          <tr><td>TOF | UK | New Evergreen | March 2026</td><td>€862</td><td class="c-up" style="font-weight:500">2.33x</td><td>16</td><td class="c-up">€54</td></tr>
+          <tr><td>RET_PURCH_PROSPA (retargeting)</td><td>€944</td><td class="c-warn" style="font-weight:500">1.34x</td><td>11</td><td class="c-warn">€86</td></tr>
+          <tr><td>PROS_ASC_PURCH_PROSPA (ASC)</td><td>€4,750</td><td class="c-down" style="font-weight:500">1.32x</td><td>55</td><td class="c-down">€86</td></tr>
+          <tr><td>BOOSTED_PROSPA</td><td>€639</td><td class="c-down" style="font-weight:500">0.87x</td><td>6</td><td class="c-down">€106</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="section-num" style="font-style:normal; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-light); margin-bottom:10px;">Google — campaign breakdown</p>
+    <div class="table-wrap" style="margin-bottom:24px;">
+      <table>
+        <thead><tr><th style="width:40%">Campaign</th><th>Type</th><th>Spend</th><th>ROAS</th><th>CPA</th></tr></thead>
+        <tbody>
+          <tr><td>Brand Search — IRE (Visibility)</td><td>Search</td><td>€255</td><td class="c-up" style="font-weight:500">25.49x</td><td class="c-up">€5</td></tr>
+          <tr><td>Brand Shopping — IRE (Broader)</td><td>Shopping</td><td>€120</td><td class="c-up" style="font-weight:500">13.40x</td><td class="c-up">€9</td></tr>
+          <tr><td>Brand Search — UK (Visibility)</td><td>Search</td><td>€664</td><td class="c-up" style="font-weight:500">4.30x</td><td class="c-up">€27</td></tr>
+          <tr><td>Brand Search — UK (New Cust.)</td><td>Search</td><td>€29</td><td class="c-up" style="font-weight:500">44.94x</td><td class="c-up">€2</td></tr>
+          <tr><td>Demand Gen — IRE (TOF)</td><td>Demand Gen</td><td>€142</td><td class="c-warn" style="font-weight:500">2.04x</td><td class="c-warn">€71</td></tr>
+          <tr><td>Demand Gen — IRE Retargeting</td><td>Demand Gen</td><td>€215</td><td class="c-down" style="font-weight:500">0.74x</td><td class="c-down">€108</td></tr>
+          <tr><td>Demand Gen — UK (Image Ads)</td><td>Demand Gen</td><td>€270</td><td class="c-down" style="font-weight:500">0.83x</td><td class="c-down">€180</td></tr>
+          <tr><td>Shopping — NB UK</td><td>Shopping</td><td>€369</td><td class="c-down" style="font-weight:500">0.46x</td><td class="c-down">€188</td></tr>
+          <tr><td>PMax — Shopping NB UK NCA</td><td>Perf. Max</td><td>€325</td><td class="c-warn" style="font-weight:500">1.22x</td><td class="c-down">€162</td></tr>
+          <tr><td>Shopping — NB IRE</td><td>Shopping</td><td>€100</td><td class="c-down" style="font-weight:500">0.30x</td><td class="c-warn">€50</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="findings">
+      <div class="finding finding-bad"><strong>Meta ROAS continues to decline.</strong> 1.57x in May vs 1.63x for the full Jan–Apr period. The ASC campaign (PROS_ASC_PURCH_PROSPA) is absorbing €4,750 of the €8,654 budget — over 54% of Meta spend — at a 1.32x ROAS and €86 CPA. This one campaign is the primary drag on Meta performance.</div>
+      <div class="finding finding-warn"><strong>Google Demand Gen still running despite the evidence.</strong> Three Demand Gen campaigns (IRE TOF, IRE retargeting, UK image ads) spent a combined €627 in May at sub-1x ROAS across two of the three. The UK Demand Gen at 0.83x and €180 CPA continues the same pattern seen in the Jan–Apr data. These should have been paused.</div>
+      <div class="finding finding-good"><strong>Email is the bright spot in May.</strong> €12,214 attributed revenue with a +20.5% improvement vs the prior period is a meaningful positive shift — the first time email has shown growth in the audit data. Flows now represent 58% of email revenue (€7,120), which is a healthy balance. This trend needs to hold through June to confirm a recovery.</div>
+      <div class="finding finding-good"><strong>Google brand search performing well.</strong> IRE brand search at 25.49x ROAS and UK brand search at 4.30x ROAS are doing their job. Sisterlyed IRE Shopping campaign at 13.40x continues to be the best-value campaign in the Google account with minimal spend.</div>
+      <div class="finding finding-warn"><strong>UK Meta is showing mixed signals.</strong> The UK Evergreen campaign achieved 2.33x ROAS at €54 CPA in May — the best UK performance seen in the entire audit. However with only 16 purchases and 21 days of data, this is too small a sample to draw firm conclusions. Worth monitoring closely in June.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span>SISTERLY — Confidential Marketing Audit · Jan–Apr 2026</span>
+  <span>Sources: Shopify · Meta Ads Manager · Google Ads · Klaviyo</span>
+</div>
+
+</body>
+</html>
